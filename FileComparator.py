@@ -31,16 +31,17 @@ def files_are_equal(path_to_first_file, size_of_first_file, path_to_second_file)
 
 
 for i in range(len(_files)):
-    _duplicateFound = False
+    list_of_duplicate_files = []
     _pathFirstFile = Path(os.path.join(os.getcwd(), _files[i]))
     if _pathFirstFile.exists():
         _sizeFirstFile = os.path.getsize(os.path.join(os.getcwd(), _files[i]))
         for j in range(i + 1, len(_files)):
             _pathSecondFile = Path(os.path.join(os.getcwd(), _files[j]))
             if files_are_equal(_pathFirstFile, _sizeFirstFile, _pathSecondFile):
-                _duplicateFound = True
-                create_duplicate_folder()
-                move_file(_pathSecondFile, _duplicateFolderName)
+                list_of_duplicate_files.append(_pathSecondFile)
 
-        if _duplicateFound:
-            move_file(_pathFirstFile, _duplicateFolderName)
+        if list_of_duplicate_files:  # if list is not empty
+            list_of_duplicate_files.append(_pathFirstFile)
+            create_duplicate_folder()
+            for f in list_of_duplicate_files:
+                move_file(f, _duplicateFolderName)
