@@ -30,6 +30,12 @@ def files_are_equal(path_to_first_file, size_of_first_file, path_to_second_file)
         return False
 
 
+def move_files_to_duplicate_folder(_list_of_duplicate_files):
+    create_duplicate_folder()
+    for f in _list_of_duplicate_files:
+        move_file(f, _duplicateFolderName)
+
+
 for i in range(len(_files)):
     list_of_duplicate_files = []
     _pathFirstFile = Path(os.path.join(os.getcwd(), _files[i]))
@@ -42,6 +48,4 @@ for i in range(len(_files)):
 
         if list_of_duplicate_files:  # if list is not empty
             list_of_duplicate_files.append(_pathFirstFile)
-            create_duplicate_folder()
-            for f in list_of_duplicate_files:
-                move_file(f, _duplicateFolderName)
+            move_files_to_duplicate_folder(list_of_duplicate_files)
